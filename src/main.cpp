@@ -23,11 +23,21 @@ ESP8266WebServer server(80);
 const char* ssid = "FR2N_2.4G";
 const char* password = "982327979";
 
+const char* ssid_acesse_point = "ESP_UI";
+const char* password_acesse_point = "";
+
+//Ative ou Desative o Modo De Ponto De Acesso
+const bool AcessePoint = true;
+
 void setup() {
     Serial.begin(115200);
 
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, password);
+    if(AcessePoint != true){
+      WiFi.begin(ssid, password);
+    }else{
+      WiFi.softAP(ssid_acesse_point, password_acesse_point);
+    }
+    
 
     server.on("/",[](){
       html(&server);
